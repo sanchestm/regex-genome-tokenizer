@@ -94,9 +94,9 @@ class regexKmerTokenizer():
             outstring = ''
             req2 = [x if (x[0] >= 0 or x[0]==-1) else (klen+x[0], x[1]) for x in  requirements]
             requirementsadj = sorted(req2,key=lambda tup: tup[0])
-            if (a := requirementsadj[0])[0] == -1:
+            a = requirementsadj[0]
+            if a[0] == -1:
                 requirementsadj = requirementsadj[1:] + [(klen - self.count_len(a[1]), a[1])]
-
             cnt = 0
             for pos, req in requirementsadj:
                 outstring += seq2add*(pos - cnt)
