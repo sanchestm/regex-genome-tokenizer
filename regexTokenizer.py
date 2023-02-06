@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import scipy.sparse as sps
 import gzip
+from sklearn.metrics import pairwise_distances
 from collections import Counter
 import ahocorasick as ac
 from typing import List, Set, Tuple, Dict
