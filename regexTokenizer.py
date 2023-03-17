@@ -482,7 +482,7 @@ class regexKmerTokenizer():
         if compression == 'none':
             with open(filename) as f: out = f.read()
         if compression in ['gz', 'gzip', 'bz']:
-            with gzip.open(text, 'rt') as f: out = f.read()
+            with gzip.open(filename, 'rt') as f: out = f.read()
         return out
                 
 
