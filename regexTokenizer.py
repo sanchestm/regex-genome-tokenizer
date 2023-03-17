@@ -341,13 +341,13 @@ class regexKmerTokenizer():
     
     def sparseStackFasta(self, filenames = [],  revComp = False, compression = 'none') -> sps.csr_matrix:
         if revComp: ret = sps.vstack(self.dict2sparseRevComp(Counter(self.tokenize_fasta('>\n'+ self.read_file(file, compression), flatten = True))) for  file  in filenames)
-        else: ret = sps.vstack(self.dict2sparse(Counter(self.tokenize_fasta('>\n' + open(file).read(), flatten = True))) for  file  in filenames)
+        else: ret = sps.vstack(self.dict2sparse(Counter(self.tokenize_fasta('>\n' + self.read_file(file, compression), flatten = True))) for  file  in filenames)
         ret._meta = sps.eye(0, dtype = np.uint32 ,format="csr")
         return ret        
     
     def sparseStackFastq(self, filenames = [],  revComp = False, compression = 'none') -> sps.csr_matrix:
         if revComp: ret = sps.vstack(self.dict2sparseRevComp(Counter(self.tokenize_fastq( self.read_file(file, compression), flatten = True))) for  file  in filenames)
-        else: ret = sps.vstack(self.dict2sparse(Counter(self.tokenize_fastq(open(file).read(), flatten = True))) for  file  in filenames)
+        else: ret = sps.vstack(self.dict2sparse(Counter(self.tokenize_fastq(self.read_file(file, compression), flatten = True))) for  file  in filenames)
         ret._meta = sps.eye(0, dtype = np.uint32 ,format="csr")
         return ret     
                 
@@ -365,9 +365,9 @@ class regexKmerTokenizer():
         import dask.array as da
         b = db.from_sequence(files)
         if typ == 'fastq':
-            bag2 = b.map_partitions(self.sparseStackFastq,  revComp = self.revComp)
+            bag2 = b.map_partitions(self.sparseStackFastq,  revComp = self.revComp, compression=compression)
         elif typ == 'fasta' or typ == 'fa':
-            bag2 = b.map_partitions(self.sparseStackFasta,  revComp = self.revComp)
+            bag2 = b.map_partitions(self.sparseStackFasta,  revComp = self.revComp, compression=compression)
         elif typ == 'string':
             if self.revComp:
                 bag2 = b.map_partitions(self.sparseStackRevComp)
