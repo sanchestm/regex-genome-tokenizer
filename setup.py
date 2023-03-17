@@ -11,5 +11,5 @@ setuptools.setup(
     py_modules=['regexTokenizer'],
     long_description_content_type = 'Package to tokenize genomic data and convert fasta/q files to pandas dataframe',
     #packages=[''],
-    install_requires=['numpy','scipy','ipywidgets','scikit-learn','seaborn','matplotlib','pandas','statsmodels', 'pyahocorasick', 'dask'],
+    install_requires=['numpy','scipy','ipywidgets','scikit-learn','seaborn','matplotlib','pandas','statsmodels', 'pyahocorasick', 'dask', 'distributed'],
 )
