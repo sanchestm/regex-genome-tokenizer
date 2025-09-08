@@ -340,14 +340,14 @@ class regexKmerTokenizer():
         return df
     
     def sparseStackFasta(self, filenames = [],  revComp = False, compression = 'none') -> sps.csr_matrix:
-        if revComp: ret = sps.vstack(self.dict2sparseRevComp(Counter(self.tokenize_fasta('>\n'+ self.read_file(file, compression), flatten = True))) for  file  in filenames)
-        else: ret = sps.vstack(self.dict2sparse(Counter(self.tokenize_fasta('>\n' + self.read_file(file, compression), flatten = True))) for  file  in filenames)
+        if revComp: ret = sps.vstack([self.dict2sparseRevComp(Counter(self.tokenize_fasta('>\n'+ self.read_file(file, compression), flatten = True))) for  file  in filenames])
+        else: ret = sps.vstack([self.dict2sparse(Counter(self.tokenize_fasta('>\n' + self.read_file(file, compression), flatten = True))) for  file  in filenames])
         ret._meta = sps.eye(0, dtype = np.uint32 ,format="csr")
         return ret        
     
     def sparseStackFastq(self, filenames = [],  revComp = False, compression = 'none') -> sps.csr_matrix:
-        if revComp: ret = sps.vstack(self.dict2sparseRevComp(Counter(self.tokenize_fastq( self.read_file(file, compression), flatten = True))) for  file  in filenames)
-        else: ret = sps.vstack(self.dict2sparse(Counter(self.tokenize_fastq(self.read_file(file, compression), flatten = True))) for  file  in filenames)
+        if revComp: ret = sps.vstack([self.dict2sparseRevComp(Counter(self.tokenize_fastq( self.read_file(file, compression), flatten = True))) for  file  in filenames])
+        else: ret = sps.vstack([self.dict2sparse(Counter(self.tokenize_fastq(self.read_file(file, compression), flatten = True))) for  file  in filenames])
         ret._meta = sps.eye(0, dtype = np.uint32 ,format="csr")
         return ret     
                 
